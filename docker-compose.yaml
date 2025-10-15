@@ -1,0 +1,35 @@
+services:
+  # PostgreSQLデータベース
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: dbt_user
+      POSTGRES_PASSWORD: dbt_password
+      POSTGRES_DB: analytics
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # dbt
+  dbt:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./:/usr/app
+    environment:
+      DBT_PROFILES_DIR: /usr/app
+    command: bash
+    ports:
+      - "8080:8080" # ドキュメントサーバー起動した時のポート
+    tty: true
+
+volumes:
+  postgres_data:

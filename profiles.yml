@@ -1,0 +1,13 @@
+# profiles.yml
+my_profile:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: postgres  # docker-composeのサービス名
+      port: 5432
+      user: dbt_user
+      password: dbt_password
+      dbname: analytics
+      schema: public
+      threads: 4

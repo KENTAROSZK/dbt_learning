@@ -1,0 +1,17 @@
+# dbt_project.yml
+name: 'my_dbt_project'
+version: '1.0.0'
+config-version: 2 # 必須. dbtのバージョン2以降で必要
+
+# プロジェクトのプロファイル名
+profile: 'my_profile'
+
+# モデルの配置場所
+model-paths: ["models"]
+test-paths: ["tests"]
+
+# モデルの設定
+models:
+  my_dbt_project:
+    # 全てのモデルをviewとして作成
+    +materialized: view

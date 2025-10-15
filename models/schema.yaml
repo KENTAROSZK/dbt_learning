@@ -1,0 +1,14 @@
+# models/schema.yml
+version: 2
+
+models:
+  - name: example
+    description: "サンプルモデル"
+    columns:
+      - name: id
+        description: "ID"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "名前"
