@@ -4,9 +4,11 @@ FROM python:3.11-slim
 # 作業ディレクトリ
 WORKDIR /usr/app
 
-# gitのインストール
+# git, PostgreSQLクライアントツールのインストール
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
+    postgresql-client \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # dbtのインストール(PostgreSQL用)
@@ -16,6 +18,3 @@ RUN pip install --no-cache-dir \
 
 # dbtプロジェクトファイルをコピー
 COPY . /usr/app
-
-# デフォルトコマンド
-CMD ["dbt", "debug"]

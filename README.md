@@ -50,17 +50,40 @@ dbt docs generate
 dbt docs serve --host 0.0.0.0 --port 8080
 ```
 
-## **Aさん**
-実行すると何が起こるんですか?
-
-## **Bさん**
-順番に説明しますね:
-
-### `dbt seed`実行後:
-PostgreSQLに`raw_orders`テーブルが作成されます。
-
-### `dbt run`実行後:
+### 8. 実行結果をPostgreSQLクライアント経由で確認する（dbt Dockerコンテナ内部で実行する）
+```bash
+# PostgreSQLに接続
+psql -h postgres -U dbt_user -d analytics
+# パスワードを聞かれたら: dbt_password
 ```
-1. sales_summary ビューが作成される
-   ↓ (このビューを使って)
-2. monthly_report ビューが作成される
+
+すると、`analytics=# `という表示になる。
+### 9. 作成したテーブルやVIEWを確認する
+
+```bash
+-- テーブル一覧を表示
+\dt
+
+-- ビュー一覧を表示
+\dv
+```
+
+
+実際のデータを見る場合は、通常のSQLを直で打ってenterすればOK。
+
+```SQL
+-- raw_ordersテーブルの全データを見る
+SELECT * FROM raw_orders;
+
+-- sales_summaryビューのデータを見る
+SELECT * FROM sales_summary;
+
+-- monthly_reportビューのデータを見る
+SELECT * FROM monthly_report;
+
+-- 件数を確認
+SELECT COUNT(*) FROM sales_summary;
+
+-- 特定の条件でフィルタ
+SELECT * FROM monthly_report WHERE product_name = 'Product A';
+```
