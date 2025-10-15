@@ -2,13 +2,47 @@
 version: 2
 
 models:
-  - name: example
-    description: "サンプルモデル"
+  - name: sales_summary
+    description: "日次で商品ごとの売上を集計"
     columns:
-      - name: id
-        description: "ID"
+      - name: order_date
+        description: "注文日"
         tests:
-          - unique
           - not_null
-      - name: name
-        description: "名前"
+      - name: product_name
+        description: "商品名"
+        tests:
+          - not_null
+      - name: total_quantity
+        description: "合計数量"
+        tests:
+          - not_null
+      - name: total_sales
+        description: "合計売上金額"
+        tests:
+          - not_null
+      - name: order_count
+        description: "注文件数"
+  - name: monthly_report
+    description: "月次の商品売上別レポート"
+    columns:
+      - name: month
+        description: "対象月(月初日)"
+        tests:
+          - not_null
+      - name: product_name
+        description: "商品名"
+        tests:
+          - not_null
+      - name: monthly_quantity
+        description: "月次合計数量"
+        tests:
+          - not_null
+      - name: monthly_sales
+        description: "月次合計売上金額"
+        tests:
+          - not_null
+      - name: avg_daily_sales
+        description: "月次平均日次売上金額"
+        tests:
+          - not_null
